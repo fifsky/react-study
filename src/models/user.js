@@ -11,8 +11,6 @@ export default {
   },
   effects: {
     * login ({payload}, {put}) {
-      const api = '/api/login'
-
       try{
         const ret = yield loginApi(payload)
         localStorage.setItem('access_token', ret.access_token)
