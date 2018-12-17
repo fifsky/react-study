@@ -4,9 +4,9 @@ export default {
   namespace: 'moods',
   state: {
     list: [],
-    pager:{
+    page:{
       "current": 1,
-      "num": 10,
+      "pageSize": 10,
       "total": 0
     }
   },

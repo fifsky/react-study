@@ -49,17 +49,24 @@ class List extends Component {
     },
   ];
 
-  load(page){
+  load = (page) => {
     return this.props.dispatch({
        type: 'moods/queryList',
        payload: {page},
      })
   }
 
+  onPageChange = (page) => {
+    let self = this
+    sync(function * () {
+      yield self.load(page.current)
+    })
+}
+
   componentDidMount () {
     let self = this
     sync(function * () {
-      yield self.load(1)
+      yield self.load(self.props.moods.page.current)
     })
   }
 
@@ -94,9 +101,10 @@ class List extends Component {
 
   onDelete = (id) => {
     let self = this
+    const {moods} = this.props
     sync(function * () {
       yield deleteApi({id: id})
-      yield self.load(1)
+      yield self.load(moods.page.current)
     })
   }
 
@@ -105,11 +113,13 @@ class List extends Component {
     const {moods, loading} = this.props
     const {form: {getFieldDecorator}} = this.props
 
+    console.log(moods)
+
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>发表</Button>
         <Table columns={this.columns} dataSource={moods.list} loading={loading}
-               rowKey="id"/>
+               rowKey="id" pagination={moods.page} onChange={this.onPageChange}/>
         <Modal
           title="今天你😊吗？"
           visible={visible}
