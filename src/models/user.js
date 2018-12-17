@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { loginApi } from '../service'
-import { Err } from '../util'
+import { Err,setAccessToken } from '../util'
 
 export default {
   namespace: 'users',
@@ -13,13 +13,19 @@ export default {
     * login ({payload}, {put}) {
       try{
         const ret = yield loginApi(payload)
-        localStorage.setItem('access_token', ret.access_token)
+        setAccessToken(ret.access_token)
         yield put({type: 'setUser', payload: {data: ret}})
         yield put(routerRedux.push('/'));
       }catch (e) {
         yield put(
           {type: 'changeStatus', payload: {status: 'error', msg: Err.instance(e).getMsg()}})
       }
+    },
+    *logout(_, { put }) {
+      yield put({type: 'setUser', payload: {data: {}}});
+      setAccessToken('')
+      yield put(routerRedux.push({pathname: '/login'})
+      );
     },
   },
   reducers: {

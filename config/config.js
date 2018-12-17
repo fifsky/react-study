@@ -9,15 +9,16 @@ export default {
   routes: [
     {
       path: '/login',
-      component: 'login',
+      component: './Login',
     },
     {
       path: '/',
       component: '../layout',
+      Routes:['src/pages/Authorized'],
       routes: [
         {
           path: '/',
-          component: 'list',
+          component: './List',
         },
         {
           path: '/dashboard',

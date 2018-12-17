@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { LocaleProvider, Layout, Menu, Icon } from 'antd';
+import { LocaleProvider, Layout, Menu, Icon,Button } from 'antd';
 import Link from 'umi/link';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -8,12 +8,24 @@ const { Header, Footer, Sider, Content } = Layout;
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import { connect } from 'dva'
 
 
 // 引入子菜单组件
 const SubMenu = Menu.SubMenu;
 
+@connect(({ users,loading }) => ({
+  users,
+  loading: loading.models.users,
+}))
 export default class BasicLayout extends Component {
+
+  logOut = () => {
+    this.props.dispatch({
+      type: 'users/logout',
+    });
+  }
+
   render() {
     return (
       <LocaleProvider locale={zhCN}>
@@ -38,7 +50,9 @@ export default class BasicLayout extends Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>Header</Header>
+          <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>Header
+            <Button onClick={this.logOut}>退出</Button>
+          </Header>
           <Content style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               {this.props.children}
