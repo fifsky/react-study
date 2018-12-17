@@ -1,6 +1,6 @@
 # React Study base on Antd
 
-##Golang API
+## Golang API
 
 see https://github.com/fifsky/vue-study/tree/master/api
 
