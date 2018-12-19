@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Form, Icon, Input, Button,Alert } from 'antd'
 import { connect } from 'dva'
-import styles from "./login.css"
+import styles from "./login.less"
 
 const FormItem = Form.Item
 
@@ -33,7 +33,7 @@ class Login extends Component {
     const { users,loading } = this.props;
     const {getFieldDecorator} = this.props.form
     return (
-      <div className={styles['login-form']}>
+      <div className={styles.loginForm}>
         <h2 style={{textAlign:"center"}}>登录</h2>
         {users.status === "error" &&
           !loading &&
