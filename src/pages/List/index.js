@@ -52,12 +52,6 @@ class List extends Component {
     },
   ]
 
-  logOut = () => {
-    this.props.dispatch({
-      type: 'users/logout',
-    })
-  }
-
   load = (page) => {
     return this.props.dispatch({
       type: 'moods/queryList',
@@ -130,7 +124,6 @@ class List extends Component {
     return (
       <Card
         title="每日心情"
-        extra={<a href="#" onClick={this.logOut}>退出</a>}
       >
         <Button type="primary" style={{marginBottom: '10px'}}
                 onClick={this.showModal}>发表</Button>

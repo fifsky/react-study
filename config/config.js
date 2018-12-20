@@ -20,6 +20,10 @@ export default {
           path: '/',
           component: './List',
         },
+        {
+          path: '/user',
+          component: './User',
+        },
       ],
     },
   ],

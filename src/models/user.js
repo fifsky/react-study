@@ -1,5 +1,5 @@
 import router from 'umi/router';
-import { loginApi } from '../service'
+import { loginApi,userApi } from '../service'
 import { Err,setAccessToken } from '../util'
 
 export default {
@@ -26,6 +26,10 @@ export default {
       setAccessToken('')
       yield router.push('/login');
     },
+    *currentUser(_, { put }) {
+      const ret = yield userApi()
+      yield put({type: 'setUser', payload: {data: ret}});
+    }
   },
   reducers: {
     changeStatus (state, {payload}) {
