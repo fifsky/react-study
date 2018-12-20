@@ -11,6 +11,10 @@ const {TextArea} = Input
   moods,
   loading: loading.models.moods,
 }))
+@connect(({users, loading}) => ({
+  users,
+  loading: loading.models.users,
+}))
 @Form.create()
 class List extends Component {
   state = {
