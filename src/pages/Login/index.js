@@ -1,11 +1,12 @@
 import { Component } from 'react'
-import { Form, Icon, Input, Button,Alert } from 'antd'
+import { Form, Icon, Input, Button, Alert } from 'antd'
 import { connect } from 'dva'
-import styles from "./login.less"
+import styles from './login.less'
+import { sync } from '../../util'
 
 const FormItem = Form.Item
 
-@connect(({ users,loading }) => ({
+@connect(({users, loading}) => ({
   users,
   loading: loading.models.users,
 }))
@@ -13,31 +14,32 @@ const FormItem = Form.Item
 class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
-    const { dispatch, form: { validateFields } } = this.props;
+    const {dispatch, form: {validateFields}} = this.props
     validateFields((err, values) => {
       if (!err) {
-        let ret = dispatch({
-          type: 'users/login',
-          payload: values,
-        });
-
+        sync(function * () {
+          yield dispatch({
+            type: 'users/login',
+            payload: values,
+          })
+        })
       }
     })
   }
 
   renderMessage = content => (
-    <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
-  );
+    <Alert style={{marginBottom: 24}} message={content} type="error" showIcon/>
+  )
 
   render () {
-    const { users,loading } = this.props;
+    const {users, loading} = this.props
     const {getFieldDecorator} = this.props.form
     return (
       <div className={styles.loginForm}>
-        <h2 style={{textAlign:"center"}}>登录</h2>
-        {users.status === "error" &&
-          !loading &&
-          this.renderMessage(users.msg)}
+        <h2 style={{textAlign: 'center'}}>登录</h2>
+        {users.status === 'error' &&
+        !loading &&
+        this.renderMessage(users.msg)}
         <Form onSubmit={this.handleSubmit}>
           <FormItem>
             {getFieldDecorator('user_name', {
@@ -58,7 +60,8 @@ class Login extends Component {
             )}
           </FormItem>
           <FormItem>
-            <Button type="primary" loading={loading} htmlType="submit" block>登录</Button>
+            <Button type="primary" loading={loading} htmlType="submit"
+                    block>登录</Button>
           </FormItem>
         </Form>
       </div>
