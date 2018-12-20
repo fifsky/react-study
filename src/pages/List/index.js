@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Table, Button, Modal, Form, Input, Popconfirm, Card } from 'antd'
 import { connect } from 'dva'
 import { sync } from '../../util'
-import { deleteApi } from '../../service'
-import co from 'co'
 
 const {TextArea} = Input
 
@@ -45,7 +43,7 @@ class List extends Component {
         return (
           <Popconfirm title="确认删除?"
                       onConfirm={() => this.onDelete(record.id)}>
-            <Button size="small">删除</Button>
+            <Button size="small" htmlType="button">删除</Button>
           </Popconfirm>
         )
       },
