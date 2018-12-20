@@ -14,19 +14,11 @@ export default {
     {
       path: '/',
       component: '../layout',
-      Routes:['src/pages/Authorized'],
+      Routes: ['src/pages/Authorized'],
       routes: [
         {
           path: '/',
           component: './List',
-        },
-        {
-          path: '/dashboard',
-          routes: [
-            {path: '/dashboard/analysis', component: 'Dashboard/Analysis'},
-            {path: '/dashboard/monitor', component: 'Dashboard/Monitor'},
-            {path: '/dashboard/workplace', component: 'Dashboard/Workplace'},
-          ],
         },
       ],
     },
