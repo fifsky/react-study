@@ -1,6 +1,6 @@
 import co from 'co'
 import { Err } from './error'
-import { message } from 'antd'
+import { notification } from 'antd'
 
 const coProcess = (fn, options = {errHandle: null}) => {
   co(function* () {
@@ -12,7 +12,10 @@ const coProcess = (fn, options = {errHandle: null}) => {
         yield options.errHandle(e)
       })
     }else{
-      message.error(Err.instance(e).getMsg())
+      notification.error({
+        message: `错误`,
+        description: Err.instance(e).getMsg(),
+      })
     }
   })
 }

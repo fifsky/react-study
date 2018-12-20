@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Table, Button, Modal, Form, Input, Popconfirm } from 'antd'
+import { Table, Button, Modal, Form, Input, Popconfirm, Card } from 'antd'
 import { connect } from 'dva'
 import { sync } from '../../util'
 import { deleteApi } from '../../service'
+import co from 'co'
 
 const {TextArea} = Input
 
@@ -21,39 +22,47 @@ class List extends Component {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: '5%',
+      width: '10%',
     },
     {
       title: '作者',
       dataIndex: 'user.name',
+      width: '12%',
     },
     {
       title: '心情',
       dataIndex: 'content',
-      width: '50%',
     },
     {
       title: '日期',
       dataIndex: 'created_at',
+      width: '30%',
     },
     {
       title: '操作',
+      width: '10%',
       render: (text, record) => {
         return (
-          <Popconfirm title="Delete?"
+          <Popconfirm title="确认删除?"
                       onConfirm={() => this.onDelete(record.id)}>
-            <Button>Delete</Button>
+            <Button size="small">删除</Button>
           </Popconfirm>
         )
       },
     },
-  ];
+  ]
+
+  logOut = () => {
+    this.props.dispatch({
+      type: 'users/logout',
+    })
+  }
 
   load = (page) => {
     return this.props.dispatch({
-       type: 'moods/queryList',
-       payload: {page},
-     })
+      type: 'moods/queryList',
+      payload: {page},
+    })
   }
 
   onPageChange = (page) => {
@@ -61,12 +70,13 @@ class List extends Component {
     sync(function * () {
       yield self.load(page.current)
     })
-}
+  }
 
   componentDidMount () {
     let self = this
+    const {moods} = this.props
     sync(function * () {
-      yield self.load(self.props.moods.page.current)
+      yield self.load(moods.page.current)
     })
   }
 
@@ -85,26 +95,30 @@ class List extends Component {
 
     validateFields((err, values) => {
       if (!err) {
-        dispatch({
-          type: 'moods/add',
-          payload: values,
-        })
-        // 重置
-        this.setState({visible: false, content: ''})
         const {form} = this.props
-        form.setFieldsValue({
-          content: '',
+        let self = this
+        sync(function * () {
+          yield dispatch({
+            type: 'moods/add',
+            payload: values,
+          })
+          // 重置
+          self.setState({visible: false, content: ''})
+          form.setFieldsValue({
+            content: '',
+          })
         })
       }
     })
   }
 
   onDelete = (id) => {
-    let self = this
-    const {moods} = this.props
+    const {moods, dispatch} = this.props
     sync(function * () {
-      yield deleteApi({id: id})
-      yield self.load(moods.page.current)
+      yield dispatch({
+        type: 'moods/delete',
+        payload: {id: id, page: moods.page.current},
+      })
     })
   }
 
@@ -113,13 +127,17 @@ class List extends Component {
     const {moods, loading} = this.props
     const {form: {getFieldDecorator}} = this.props
 
-    console.log(moods)
-
     return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>发表</Button>
+      <Card
+        title="每日心情"
+        extra={<a href="#" onClick={this.logOut}>退出</a>}
+      >
+        <Button type="primary" style={{marginBottom: '10px'}}
+                onClick={this.showModal}>发表</Button>
+
         <Table columns={this.columns} dataSource={moods.list} loading={loading}
-               rowKey="id" pagination={moods.page} onChange={this.onPageChange}/>
+               rowKey="id" pagination={moods.page}
+               onChange={this.onPageChange}/>
         <Modal
           title="今天你😊吗？"
           visible={visible}
@@ -134,7 +152,7 @@ class List extends Component {
             )}
           </Form>
         </Modal>
-      </div>
+      </Card>
     )
   }
 }
