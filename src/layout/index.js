@@ -42,7 +42,7 @@ class BasicLayout extends Component {
       <LocaleProvider locale={zhCN}>
         <Layout>
 
-          <Header style={{background: '#fff', padding: 0, height: 'auto',lineHeight:'none'}}>
+          <Header style={{background: '#fff', padding: 0, height: 'auto',lineHeight:'normal'}}>
             <div className={styles.main}>
             <Menu
               className={styles.left}
