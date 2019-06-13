@@ -62,8 +62,8 @@ class BasicLayout extends Component {
                   <span>个人中心</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="verystar">
-                <a href="https://pay.verystar.cn" target="_blank"
+              <Menu.Item key="fifsky">
+                <a href="https://fifsky.com" target="_blank"
                    rel="noopener"><Icon type="link"/>VeryPay</a>
               </Menu.Item>
             </Menu>
