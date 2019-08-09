@@ -4,6 +4,8 @@
 
 see https://github.com/fifsky/vue-study/tree/master/api
 
+admin/123456
+
 ## Run
 ```
 npm install
