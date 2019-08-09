@@ -17,8 +17,8 @@ class Login extends Component {
     const {dispatch, form: {validateFields}} = this.props
     validateFields((err, values) => {
       if (!err) {
-        sync(function * () {
-          yield dispatch({
+        sync(async function () {
+          await dispatch({
             type: 'users/login',
             payload: values,
           })

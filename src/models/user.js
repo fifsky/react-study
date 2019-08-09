@@ -1,6 +1,7 @@
 import router from 'umi/router';
-import { loginApi,userApi } from '../service'
+import { loginApi,userApi,queryActivities } from '../service'
 import { Err,setAccessToken } from '../util'
+
 
 export default {
   namespace: 'users',
@@ -10,9 +11,10 @@ export default {
     msg: '',
   },
   effects: {
-    * login ({payload}, {put}) {
+    * login ({payload}, {call,put}) {
       try{
         const ret = yield loginApi(payload)
+        console.log(ret)
         setAccessToken(ret.access_token)
         yield put({type: 'setUser', payload: {data: ret}})
         yield router.push('/')

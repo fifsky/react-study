@@ -8,6 +8,10 @@ export default {
   ],
   routes: [
     {
+      path: '/test',
+      component: './Context',
+    },
+    {
       path: '/login',
       component: './Login',
     },
@@ -23,7 +27,7 @@ export default {
         {
           path: '/user',
           component: './User',
-        },
+        }
       ],
     },
   ],

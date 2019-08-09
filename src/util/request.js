@@ -1,7 +1,6 @@
 import fetch from 'dva/fetch'
 import { Err } from './error'
 import { getAccessToken } from './auth'
-import co from 'co'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -31,7 +30,7 @@ const checkStatus = response => {
   throw error
 }
 
-export const request = (url, options) => {
+export async function request(url, options) {
   const newOptions = {...options}
   if (newOptions.method === 'POST') {
     if (!(newOptions.body instanceof FormData)) {
@@ -50,16 +49,14 @@ export const request = (url, options) => {
     }
   }
 
-  return co(function* () {
-    let response = yield fetch(url, newOptions)
-    checkStatus(response)
-    let ret = yield response.json()
-    if (ret.code === 200) {
-      return ret.data
-    } else {
-      throw Err.instance(ret)
-    }
-  })
+  let response = await fetch(url, newOptions)
+  checkStatus(response)
+  let ret = await response.json()
+  if (ret.code === 10000) {
+    return ret.data
+  } else {
+    throw Err.instance(ret)
+  }
 }
 
 export const createApi = (url, body) => {

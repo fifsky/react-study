@@ -59,16 +59,17 @@ class List extends Component {
 
   onPageChange = (page) => {
     let self = this
-    sync(function * () {
-      yield self.load(page.current)
+    sync(async function () {
+      await self.load(page.current)
     })
   }
 
   componentDidMount () {
     let self = this
     const {moods} = this.props
-    sync(function * () {
-      yield self.load(moods.page.current)
+
+    sync(async function() {
+      await self.load(moods.page.current)
     })
   }
 
@@ -89,8 +90,8 @@ class List extends Component {
       if (!err) {
         const {form} = this.props
         let self = this
-        sync(function * () {
-          yield dispatch({
+        sync(async function () {
+          await dispatch({
             type: 'moods/add',
             payload: values,
           })
@@ -106,8 +107,8 @@ class List extends Component {
 
   onDelete = (id) => {
     const {moods, dispatch} = this.props
-    sync(function * () {
-      yield dispatch({
+    sync(async function () {
+      await dispatch({
         type: 'moods/delete',
         payload: {id: id, page: moods.page.current},
       })
