@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { LocaleProvider, Layout, Menu, Icon, Card } from 'antd'
+import { ConfigProvider, Layout, Menu, Icon, Card } from 'antd'
 import Link from 'umi/link'
 
 const {Header} = Layout
@@ -39,7 +39,7 @@ class BasicLayout extends Component {
 
   render () {
     return (
-      <LocaleProvider locale={zhCN}>
+      <ConfigProvider locale={zhCN}>
         <Layout>
 
           <Header style={{background: '#fff', padding: 0, height: 'auto',lineHeight:'normal'}}>
@@ -76,7 +76,7 @@ class BasicLayout extends Component {
             {this.props.children}
           </div>
         </Layout>
-      </LocaleProvider>
+      </ConfigProvider>
     )
   }
 }

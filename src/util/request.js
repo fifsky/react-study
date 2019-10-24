@@ -1,4 +1,4 @@
-import fetch from 'dva/fetch'
+import { fetch } from 'dva'
 import { Err } from './error'
 import { getAccessToken } from './auth'
 
