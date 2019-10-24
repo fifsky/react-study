@@ -8,8 +8,8 @@ const {TextArea} = Input
 export default Form.create()(props => {
   const dispatch = useDispatch()
   const moods = useSelector(state => state.moods)
+  const loading = useSelector(state => state.loading.models.moods)
 
-  const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [visible, setVisible] = useState(false)
 
@@ -48,13 +48,11 @@ export default Form.create()(props => {
   ]
 
   useEffect(() => {
-    setLoading(true)
     sync(async function () {
       await dispatch({
         type: 'moods/queryList',
         payload: {page},
       })
-      setLoading(false)
     })
   }, [page])
 
