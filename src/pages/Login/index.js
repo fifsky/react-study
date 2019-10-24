@@ -16,7 +16,7 @@ export default Form.create()(props => {
     const {form: {validateFields}} = props
     validateFields((err, values) => {
       if (!err) {
-        sync(async function () {
+        sync(async () => {
           await dispatch({
             type: 'users/login',
             payload: values,

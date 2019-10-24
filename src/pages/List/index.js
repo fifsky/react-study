@@ -48,7 +48,7 @@ export default Form.create()(props => {
   ]
 
   useEffect(() => {
-    sync(async function () {
+    sync(async () => {
       await dispatch({
         type: 'moods/queryList',
         payload: {page},
@@ -67,7 +67,7 @@ export default Form.create()(props => {
     validateFields((err, values) => {
       if (!err) {
         const {form} = props
-        sync(async function () {
+        sync(async () => {
           await dispatch({
             type: 'moods/add',
             payload: values,
@@ -83,7 +83,7 @@ export default Form.create()(props => {
   }
 
   const onDelete = (id) => {
-    sync(async function () {
+    sync(async () => {
       await dispatch({
         type: 'moods/delete',
         payload: {id: id, page: moods.page.current},
