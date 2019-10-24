@@ -1,20 +1,15 @@
-import { Card,Calendar,Row, Col } from 'antd';
-import { connect } from 'dva'
-import { Component } from 'react'
+import { Card, Calendar, Row, Col } from 'antd'
+import { useSelector } from 'dva'
 
-@connect(({users}) => ({
-  users,
-}))
-class User extends Component {
+export default () => {
+  const users = useSelector(state => state.users)
 
-  onPanelChange = (value, mode) => {
-    console.log(value, mode);
+  const onPanelChange = (value, mode) => {
+    console.log(value, mode)
   }
 
-  render() {
-    const {users} = this.props
-    console.log(users)
-    return (
+  console.log(users)
+  return (
     <Card
       title="个人中心"
       style={{width: 800}}
@@ -24,12 +19,9 @@ class User extends Component {
       <p>注册时间：{users.data.created_at}</p>
       <Row>
         <Col>
-          <Calendar fullscreen={false} onPanelChange={this.onPanelChange} />
+          <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
         </Col>
       </Row>
     </Card>
-    )
-  };
+  )
 }
-
-export default User
