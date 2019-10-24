@@ -1,4 +1,4 @@
-# React Study base on Antd
+# React Study for Hooks base on Antd
 
 ## Golang API
 
